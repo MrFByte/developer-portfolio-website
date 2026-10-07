@@ -1,0 +1,140 @@
+---
+import { Image } from 'astro:assets';
+import avatar from '../assets/avatar.png';
+
+const socials = [
+  { label: 'GitHub', href: 'https://github.com/MrLionByte', icon: 'M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/farhan-mahmood-n/', icon: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6ZM2 9h4v12H2zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z' },
+  { label: 'X (Twitter)', href: 'https://x.com/Farhanmn0', icon: 'M4 4l16 16M20 4 4 20' },
+  { label: 'LeetCode', href: 'https://leetcode.com/u/FARHANMN2000/', icon: 'M13 2 4 14h6l-1 8 9-12h-6l1-8Z' },
+];
+---
+
+<section id="home" class="relative flex min-h-[90svh] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 lg:px-12">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute left-1/2 top-[8%] h-[min(560px,80vw)] w-[min(560px,80vw)] -translate-x-1/2 rounded-full bg-volt/15 blur-[110px]"
+  >
+  </div>
+
+  <div class="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
+    <div class="order-2 flex flex-col items-center gap-6 text-center lg:order-1 lg:items-start lg:text-left">
+      <span
+        data-availability
+        class="inline-flex items-center gap-2 rounded-full border border-volt/30 bg-volt/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-volt"
+      >
+        <span class="h-1.5 w-1.5 rounded-full bg-volt" data-availability-dot></span>
+        <span data-availability-text aria-live="polite">Available for new opportunities</span>
+      </span>
+
+      <h1 class="font-display text-5xl uppercase leading-[0.95] tracking-tight text-chalk sm:text-6xl md:text-7xl">
+        Farhan <br />
+        <span class="text-volt">Mahmood N</span>
+      </h1>
+
+      <p class="font-display text-lg uppercase tracking-wide text-fog sm:text-xl">
+        <span class="sr-only">Full-Stack Developer, IoT Enthusiast, Problem Solver</span>
+        <span class="relative inline-block h-[1.4em] min-w-[17ch] align-bottom" aria-hidden="true">
+          <span class="role-cycle text-chalk" style="animation-delay:0s">Full-Stack Developer</span>
+          <span class="role-cycle text-chalk" style="animation-delay:3s">IoT Enthusiast</span>
+          <span class="role-cycle text-chalk" style="animation-delay:6s">Problem Solver</span>
+        </span>
+      </p>
+
+      <p class="max-w-lg text-base leading-relaxed text-fog sm:text-lg">
+        Turning ideas into purposeful software — from Kafka-driven microservices to IoT systems that
+        touch the real world. Grounded in clarity, driven by curiosity.
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+        <a
+          href="#projects"
+          class="rounded-md bg-volt px-7 py-3 font-display text-sm uppercase tracking-widest text-ink shadow-[0_0_24px_rgba(200,255,61,0.25)] transition-transform hover:scale-[1.03]"
+        >
+          View Work
+        </a>
+        <a
+          href="#contact"
+          class="rounded-md border border-fog/30 px-7 py-3 font-display text-sm uppercase tracking-widest text-chalk transition-colors hover:border-volt hover:text-volt"
+        >
+          Contact
+        </a>
+      </div>
+
+      <div class="flex gap-3 pt-2">
+        {
+          socials.map((social) => (
+            <a
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.label}
+              class="flex h-11 w-11 items-center justify-center rounded-lg border border-fog/15 bg-panel/70 text-fog transition-colors hover:border-volt/50 hover:text-volt"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d={social.icon} />
+              </svg>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="order-1 flex justify-center pb-4 lg:order-2 lg:justify-end">
+      <div class="relative w-full max-w-sm border border-fog/10 bg-panel/60 p-3 sm:max-w-md">
+        <Image
+          src={avatar}
+          alt="Illustrated avatar of Farhan Mahmood N as a developer"
+          width={720}
+          height={720}
+          format="webp"
+          quality={82}
+          loading="eager"
+          fetchpriority="high"
+          class="h-auto w-full object-cover panel-clip-sm"
+        />
+        <div class="absolute -bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full border border-fog/20 bg-ink px-4 py-1.5 shadow-lg">
+          <span class="h-1.5 w-1.5 rounded-full bg-volt"></span>
+          <span class="font-display text-[10px] uppercase tracking-widest text-chalk">Dev Mode: On</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes role-cycle {
+    0%,
+    4% {
+      opacity: 0;
+    }
+    8%,
+    28% {
+      opacity: 1;
+    }
+    33%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .role-cycle {
+    position: absolute;
+    inset: 0;
+    white-space: nowrap;
+    opacity: 0;
+    animation: role-cycle 9s ease-in-out infinite;
+    animation-fill-mode: both;
+  }
+</style>

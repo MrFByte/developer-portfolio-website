@@ -1,0 +1,31 @@
+---
+import Section from './Section.astro';
+
+const skillGroups = [
+  { category: 'Backend', items: ['Python', 'Django', 'DRF', 'JWT Auth', 'Django Channels', 'Celery', 'FastAPI'] },
+  { category: 'Frontend', items: ['React', 'Redux', 'Tailwind CSS', 'Bootstrap'] },
+  { category: 'Database & Messaging', items: ['PostgreSQL', 'MongoDB', 'Kafka', 'Redis', 'Firebase'] },
+  { category: 'DevOps / Cloud', items: ['Docker', 'Kubernetes', 'AWS (EC2, S3)', 'GCP', 'CI/CD'] },
+  { category: 'IoT / Embedded', items: ['Arduino', 'NodeMCU', 'ESP32', 'Embedded C'] },
+  { category: 'Tools', items: ['Git', 'Nginx', 'Postman', 'Figma'] },
+];
+---
+
+<Section id="skills" index="02" title="Skills" subtitle="The stack I reach for, grouped by where it fits">
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      skillGroups.map((group) => (
+        <div class="group rounded-lg border border-fog/10 bg-ink/40 p-5 transition-colors hover:border-volt/40">
+          <h3 class="mb-3 font-display text-sm uppercase tracking-widest text-volt">{group.category}</h3>
+          <ul class="flex flex-wrap gap-2">
+            {group.items.map((skill) => (
+              <li class="rounded-md border border-fog/15 bg-panel px-2.5 py-1 text-xs font-medium text-chalk">
+                {skill}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</Section>

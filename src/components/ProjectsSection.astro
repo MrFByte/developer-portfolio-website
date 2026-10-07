@@ -1,0 +1,112 @@
+---
+import Section from './Section.astro';
+import projects, { categoryLabels, type Project } from '../data/projects';
+
+const filters: { key: Project['category'] | 'all'; label: string }[] = [
+  { key: 'all', label: 'All' },
+  { key: 'web', label: categoryLabels.web },
+  { key: 'app', label: categoryLabels.app },
+  { key: 'mini-web', label: categoryLabels['mini-web'] },
+  { key: 'iot', label: categoryLabels.iot },
+   { key: 'live-product', label: categoryLabels['live-product'] },
+  { key: 'other', label: categoryLabels.other },
+];
+---
+
+<Section id="projects" index="03" title="Projects" subtitle="A selection of what I've shipped — web, mini web, live products, IoT and other builds">
+  <div class="mb-8 flex flex-wrap gap-2" role="group" aria-label="Filter projects by category">
+    {
+      filters.map((f, i) => (
+        <button
+          type="button"
+          data-project-filter={f.key}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          class="rounded-full border border-fog/20 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-fog transition-colors data-[active=true]:border-volt data-[active=true]:bg-volt data-[active=true]:text-ink"
+          data-active={i === 0 ? 'true' : 'false'}
+        >
+          {f.label}
+        </button>
+      ))
+    }
+  </div>
+
+  <div id="project-grid" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      projects.map((project) => (
+        <article
+          data-project-card
+          data-category={project.category}
+          class="group flex flex-col overflow-hidden rounded-lg border border-fog/10 bg-ink/40 transition-colors hover:border-volt/40"
+        >
+          <div class="relative h-40 overflow-hidden bg-panel">
+            <img
+              src={project.image}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              width="640"
+              height="360"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            {project.featured && (
+              <span class="absolute right-2 top-2 rounded-md bg-volt px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-ink">
+                Featured
+              </span>
+            )}
+          </div>
+          <div class="flex flex-1 flex-col gap-3 p-5">
+            <h3 class="font-display text-lg uppercase tracking-tight text-chalk">{project.title}</h3>
+            <p class="flex-1 text-sm leading-relaxed text-fog">{project.description}</p>
+            <ul class="flex flex-wrap gap-1.5">
+              {project.tags.slice(0, 4).map((tag) => (
+                <li class="rounded bg-panel px-2 py-0.5 text-[11px] text-fog">{tag}</li>
+              ))}
+            </ul>
+            <div class="mt-1 flex gap-4 text-xs font-bold uppercase tracking-widest">
+              {project.demoUrl && (
+                <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" class="text-volt hover:underline">
+                  Live
+                </a>
+              )}
+              {project.codeUrl && (
+                <a href={project.codeUrl} target="_blank" rel="noopener noreferrer" class="text-fog hover:text-chalk hover:underline">
+                  Source
+                </a>
+              )}
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <p id="project-empty" hidden class="py-10 text-center text-sm text-fog">
+    Nothing in this category yet — check back soon.
+  </p>
+</Section>
+
+<script>
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-project-filter]'));
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-project-card]'));
+  const empty = document.getElementById('project-empty');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.projectFilter;
+      buttons.forEach((b) => {
+        const active = b === button;
+        b.dataset.active = String(active);
+        b.setAttribute('aria-pressed', String(active));
+      });
+
+      let visibleCount = 0;
+      cards.forEach((card) => {
+        const match = filter === 'all' || card.dataset.category === filter;
+        card.hidden = !match;
+        if (match) visibleCount += 1;
+      });
+
+      if (empty) empty.hidden = visibleCount !== 0;
+    });
+  });
+</script>

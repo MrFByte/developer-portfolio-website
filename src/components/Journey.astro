@@ -1,0 +1,44 @@
+---
+import Section from './Section.astro';
+
+const interests = [
+  { icon: '🔧', title: 'Electronics & IoT', desc: 'Tinkering with circuits and automation projects.' },
+  { icon: '⚽', title: 'Football', desc: 'Playing and following the beautiful game, passionately.' },
+  { icon: '📚', title: 'Continuous Learning', desc: 'Always exploring new tech and shipping side projects.' },
+];
+---
+
+<Section id="journey" index="01" title="Journey" subtitle="How I got here, and what keeps me going">
+  <div class="grid gap-10 md:grid-cols-5 md:gap-12">
+    <div class="space-y-5 md:col-span-3">
+      <p class="leading-relaxed text-fog">
+        I'm a passionate, resilient full-stack developer with a strong foundation in{' '}
+        <span class="text-chalk">Python, Django, React and microservice architecture</span>. My journey
+        started with an IoT project back in college, which sparked a lasting love for building
+        real-world tech solutions.
+      </p>
+      <p class="leading-relaxed text-fog">
+        I specialize in scalable backend systems using <span class="text-chalk">Kafka, Redis, RabbitMQ and Celery</span>,
+        and ship them to the cloud with <span class="text-chalk">Docker and Kubernetes</span>. I'm a
+        lifelong learner who loves open source, writing technical content, and solving problems with
+        clean code.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-3 md:col-span-2">
+      {
+        interests.map((interest) => (
+          <div class="flex items-start gap-3 rounded-lg border border-fog/10 bg-ink/40 p-4 transition-colors hover:border-volt/40">
+            <span class="text-2xl leading-none" aria-hidden="true">
+              {interest.icon}
+            </span>
+            <div>
+              <h3 class="font-bold uppercase tracking-wide text-chalk">{interest.title}</h3>
+              <p class="text-sm text-fog">{interest.desc}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</Section>

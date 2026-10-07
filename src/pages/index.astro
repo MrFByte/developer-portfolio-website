@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Journey from '../components/Journey.astro';
+import Skills from '../components/Skills.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+import BlogSection from '../components/BlogSection.astro';
+import ContactSection from '../components/ContactSection.astro';
+---
+
+<Layout>
+  <main id="main" style="padding-bottom: var(--nav-safe-h);">
+    <Hero />
+    <Journey />
+    <Skills />
+    <ProjectsSection />
+    <BlogSection />
+    <ContactSection />
+
+    <footer class="px-4 pb-10 pt-4 text-center text-xs text-fog/70">
+      © {new Date().getFullYear()} Farhan Mahmood N.
+    </footer>
+  </main>
+
+  <Nav />
+</Layout>

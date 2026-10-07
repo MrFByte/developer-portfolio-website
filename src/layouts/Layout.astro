@@ -1,0 +1,122 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Farhan Mahmood N — Full-Stack Developer',
+  description = 'Full-stack developer specializing in Python, Django, React and event-driven microservices. Building IoT systems, AI tooling and scalable web platforms.',
+} = Astro.props;
+
+const siteUrl = Astro.site ?? new URL('https://farhanmn.site');
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const ogImage = new URL('/favicon.png', siteUrl);
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Farhan Mahmood N',
+  url: siteUrl.toString(),
+  jobTitle: 'Full-Stack Developer',
+  sameAs: [
+    'https://github.com/MrLionByte',
+    'https://www.linkedin.com/in/farhan-mahmood-n/',
+    'https://x.com/Farhanmn0',
+    'https://leetcode.com/u/FARHANMN2000/',
+  ],
+  knowsAbout: ['Python', 'Django', 'React', 'Microservices', 'IoT', 'Kafka', 'Docker', 'Kubernetes'],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0d10" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <link rel="icon" href="/favicon.png" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-volt focus:text-ink focus:px-4 focus:py-2 focus:rounded-md focus:font-bold"
+    >
+      Skip to content
+    </a>
+
+    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <div
+        class="absolute top-[-12%] right-[5%] h-[min(600px,70vw)] w-[min(600px,70vw)] rounded-full bg-volt/5 blur-[100px]"
+      >
+      </div>
+      <div
+        class="absolute bottom-[10%] left-[-10%] h-[min(500px,70vw)] w-[min(500px,70vw)] rounded-full bg-signal/10 blur-[110px]"
+      >
+      </div>
+    </div>
+
+    <slot />
+
+    <script>
+      import { STATUS_URL } from '../config';
+
+      async function loadAvailability() {
+        try {
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), 4000);
+          const response = await fetch(STATUS_URL, { signal: controller.signal, cache: 'no-store' });
+          clearTimeout(timeout);
+          if (!response.ok) return;
+
+          const data = await response.json();
+          const open = Boolean(data.openToWork);
+          const message =
+            typeof data.message === 'string' && data.message.trim()
+              ? data.message.trim()
+              : open
+                ? 'Open to Work'
+                : 'Not available right now';
+
+          document.querySelectorAll<HTMLElement>('[data-availability-text]').forEach((el) => {
+            el.textContent = message;
+          });
+          document.querySelectorAll<HTMLElement>('[data-availability-dot]').forEach((el) => {
+            el.classList.toggle('bg-volt', open);
+            el.classList.toggle('bg-fog', !open);
+          });
+        } catch {
+          // Fetch failed or timed out — keep the server-rendered default in place.
+        }
+      }
+
+      loadAvailability();
+    </script>
+  </body>
+</html>

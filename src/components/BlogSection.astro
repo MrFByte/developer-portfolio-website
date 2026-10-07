@@ -1,0 +1,31 @@
+---
+import Section from './Section.astro';
+import blogPosts from '../data/blog';
+---
+
+<Section id="blog" index="04" title="Blog" subtitle="Notes on algorithms, databases and whatever I'm building">
+  <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+    {
+      blogPosts.map((post) => (
+        <a
+          href={post.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group flex flex-col gap-3 rounded-lg border border-fog/10 bg-ink/40 p-5 transition-colors hover:border-volt/40"
+        >
+          <span class="w-fit rounded-full bg-volt/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-volt">
+            {post.category}
+          </span>
+          <h3 class="font-display text-base uppercase leading-snug tracking-tight text-chalk group-hover:text-volt">
+            {post.title}
+          </h3>
+          <p class="flex-1 text-sm leading-relaxed text-fog">{post.summary}</p>
+          <div class="flex items-center justify-between text-xs text-fog">
+            <span>{post.date}</span>
+            <span>{post.readTime}</span>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</Section>
